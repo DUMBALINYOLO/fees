@@ -1,0 +1,3 @@
+export const GET_STAFF_USERS = 'GET_STAFF_USERS';
+export const GET_STAFF_USER = 'GET_STAFF_USER';
+export const ADD_STAFF_USER = 'ADD_STAFF_USER';
