@@ -36,31 +36,6 @@ class Invoice(models.Model):
 
 
 
-    properties
-    --------
-    overdue - bool
-    overdue_days - int
-    total - decimal
-    is_quotation - bool
-    is_credit -bool
-    total_paid - decimal
-    total_due - the remainder fo payments
-    tax_amount - decimal
-    subtotal -decimal
-    sales_lines
-    sales_total
-    service_lines
-    service_total
-    expense_lines
-    expense_total
-    total_shipping_costs
-    percentage_shipping_cost
-    returned_total
-    sales_only
-    service_only
-    expense_only
-
-
 
     '''
 
