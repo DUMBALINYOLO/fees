@@ -8,7 +8,6 @@ import { Toolbar } from 'primereact/toolbar';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
 import { useHistory } from 'react-router-dom';
-import './table.css';
 import {
   Paper,
   makeStyles,
@@ -71,8 +70,15 @@ const Admins = (props) => {
 
 
 
-    const handleClick = id =>{
-      history.push(`/managementdashboard/users/${id}`)
+    const handleClick = (role, id) =>{
+      if (role === 'admin' | 'bursar'){
+        history.push(`/managementdashboard/users/${id}`)
+      }else if (role === 'bursar'){
+        history.push(`/managementdashboard/users/${id}`)
+      }else {
+        history.push(`/managementdashboard/students/${id}`)
+      }
+
     }
 
     const actionBodyTemplate = (rowData) => {
@@ -81,7 +87,6 @@ const Admins = (props) => {
                 <Button
                   label='OPEN'
                   className="p-button-rounded  p-button-warning"
-                  onClick={() => handleClick(rowData.id)}
                 />
             </React.Fragment>
         );
@@ -135,7 +140,35 @@ const Admins = (props) => {
                           filter
 
                         />
-                        <Column body={actionBodyTemplate} header="ACTION"/>
+                        <Column
+                          header="FIRST NAME"
+                          field="first_name"
+                          sortable
+                          filter
+
+                        />
+                        <Column
+                          header="MIDDLE NAME"
+                          field="middle_name"
+                          sortable
+                          filter
+
+                        />
+                        <Column
+                          header="LAST NAME"
+                          field="last_name"
+                          sortable
+                          filter
+
+                        />
+                        <Column
+                          header="GENDER"
+                          field="gender"
+                          sortable
+                          filter
+
+                        />
+
                     </DataTable>
                 </div>
 

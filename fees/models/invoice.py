@@ -84,13 +84,14 @@ class Invoice(models.Model):
             null=True,
             related_name='invoices',
         )
-    due= models.DateField( default=datetime.date.today)
+    due= models.DateField(default=datetime.date.today)
     date= models.DateField(default=datetime.date.today)
     terms = models.CharField(
                 max_length = 128,
-                blank=True
-                )
-    comments = models.TextField(blank=True)
+                blank=True,
+                default ='Pay soon'
+            )
+    comments = models.TextField(blank=True, default ='Make sure you pay your fees as soon as possible')
     is_voided = models.BooleanField(blank=True,default=False)
 
 
@@ -109,6 +110,7 @@ class Invoice(models.Model):
             return self.overdue_days > 0
         return False
 
+
     @property
     def overdue_days(self):
         '''returns days due'''
@@ -121,14 +123,9 @@ class Invoice(models.Model):
     @property
     def total(self):
         '''the total value of the invoice inclusive of tax'''
-        return self.subtotal + self.tax_amount
+        return self.subtotal
 
 
-    @property
-    def on_credit(self):
-        '''Checks if the invoice is on credit returns bool'''
-        return self.status in ['invoice', 'paid-partially'] and not self.draft \
-            and self.due > self.date
 
     @property
     def total_paid(self):
@@ -137,9 +134,23 @@ class Invoice(models.Model):
 
 
     @property
+    def status(self):
+        if self.is_voided == True:
+            return 'voided'
+        else:
+            if self.total_paid <= 0.0:
+                return 'unpaid'
+            elif self.total_paid < self.total:
+                return 'partially'
+            else:
+                return 'fully'
+
+
+
+    @property
     def total_due(self):
         '''The remaining balance left to be paid on an invoice'''
-        return self.total - self.total_paid - self.total_credited
+        return self.total - self.total_paid
 
 
 
@@ -187,8 +198,7 @@ class InvoiceLine(models.Model):
                         on_delete=models.PROTECT,
                     )
     value = models.DecimalField(max_digits=16, decimal_places=2, default=0.0)
-    quantity= models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
-    discount =models.DecimalField(max_digits=16, decimal_places=2, default=0.0)
+    quantity= models.IntegerField(default=1)
     reference_number = models.CharField(max_length=255, null=True, default=None)
 
 
@@ -209,10 +219,7 @@ class InvoiceLine(models.Model):
         return self.value
 
 
-    @property
-    def nominal_price(self):
-        '''The price of the line without discount and taxes'''
-        return self.quantity * self.fee.amount
+
 
 
     def __str__(self):
@@ -223,19 +230,16 @@ class InvoiceLine(models.Model):
     @property
     def subtotal(self):
         '''Returns the value of the line after the discount and before taxes'''
-        return self.nominal_price - self.discount_total
+        return self.quantity * self.fee.amount
+
 
     @property
     def total(self):
         '''Includes price after discount and tax'''
-        if not self.component:
-            return 0
-
+        print(self.subtotal)
         return self.subtotal
 
+
     @property
-    def discount_total(self):
-        if self.discount == None:
-            return D(0)
-        '''Returns the value subtracted from the nominal price due to a discount'''
-        return D(self.nominal_price) * D(self.discount)
+    def price(self):
+        return self.fee.amount

@@ -94,7 +94,7 @@ class User(AbstractBaseUser, PermissionsMixin):
                         null=True,
                         max_length=355
                     )
-    active = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     admin = models.BooleanField(default=False)

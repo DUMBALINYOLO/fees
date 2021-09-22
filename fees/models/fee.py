@@ -8,11 +8,12 @@ class Fee(models.Model):
     FEES_TARGETS_CHOICES = [
         ('individual', 'INDIVIDUAL'),
         ('all', 'ALL STUDENTS'),
-        ('eights', 'GRADE 8'),
-        ('nines', 'GRADE 9'),
-        ('tens', 'GRADE 10'),
-        ('elvens', 'GRADE 11'),
-        ('twelves', 'GRADE 12'),
+        ('one', 'FORM 1'),
+        ('two', 'FORM 2'),
+        ('three', 'FORM 3'),
+        ('four', 'FORM 4'),
+        ('five', 'FORM 5'),
+        ('six', 'FORM 6'),
         ('other', 'OTHER'),
 
     ]
@@ -22,8 +23,6 @@ class Fee(models.Model):
         ('once', 'ONCE-OFF'),
         ('often', 'OFTEN'),
     ]
-
-
 
 
     name = models.CharField(max_length=300)

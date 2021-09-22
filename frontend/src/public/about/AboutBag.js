@@ -19,7 +19,6 @@ function TestimnonialsSections(props) {
   return (
     <Corporate>
       <div className={classes.root}>
-          <AboutOne  />
           <AboutTwo  />
       </div>
     </ Corporate>

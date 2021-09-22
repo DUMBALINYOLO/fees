@@ -7,12 +7,14 @@ import {
   CREATE_USER_FAIL,
 
 
+
 } from '../../types/userTypes';
 import { updateObject } from "../../utility";
 
 const initialState = {
     loading: false,
     error: null,
+
 }
 
 

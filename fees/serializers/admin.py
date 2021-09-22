@@ -30,8 +30,6 @@ class FeeCreateUpdateSerializer(serializers.ModelSerializer):
 
 
 class FeeListDetailSerializer(serializers.ModelSerializer):
-	targets = serializers.SerializerMethodField()
-	type = serializers.SerializerMethodField()
 
 
 	class Meta:
@@ -44,21 +42,13 @@ class FeeListDetailSerializer(serializers.ModelSerializer):
 			'amount',
 		]
 
-	def get_targets(self, obj):
-		return obj.get_targets_display()
-
-
-	def get_type(self, obj):
-		return obj.get_type_display()
-
-
 
 
 class InvoiceLineCreateSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = InvoiceLine
-		fields = ['pk', 'fee', 'quantity', 'discount']
+		fields = ['pk', 'fee', 'quantity']
 
 
 
@@ -71,9 +61,9 @@ class InvoiceLineListSerializer(serializers.ModelSerializer):
 		fields = [
 			'id',
 			'fee',
-			'discount',
 			'total',
-			'value',
+			'price',
+			'quantity',
 			'reference_number',
 		]
 
@@ -88,11 +78,7 @@ class InvoiceCreateUpdateSerializer(WritableNestedModelSerializer):
 		fields = [
 			'id',
 			'student',
-			'validated_by',
-			'bookkeeper',
 			'due',
-			'terms',
-			'comments',
 			'lines',
 		]
 
@@ -100,8 +86,8 @@ class InvoiceCreateUpdateSerializer(WritableNestedModelSerializer):
 
 
 class InvoiceDetailSerializer(serializers.ModelSerializer):
-	lines = InvoiceLineListSerializer(many=True, read_only=True)
 	bookkeeper = StringSerializer()
+	student = StringSerializer()
 
 
 	class Meta:
@@ -112,15 +98,15 @@ class InvoiceDetailSerializer(serializers.ModelSerializer):
 			'student',
 			'bookkeeper',
 			'due',
+			'date',
 			'terms',
 			'comments',
-			'lines',
 			'total',
 			'overdue_days',
-			'on_credit',
+
 			'total_paid',
 			'total_due',
-			'returned_total',
+			'status',
 		]
 
 
@@ -136,7 +122,7 @@ class PaymentCreateUpdateSerializer(serializers.ModelSerializer):
 			'amount',
 			'invoice',
 			'method',
-			'cashier',
+			'bookkeeper',
 			'comments',
 		]
 
@@ -160,5 +146,4 @@ class PaymentListDetailSerializer(serializers.ModelSerializer):
 			'bookkeeper',
 			'comments',
 			'due',
-			'entry',
 		]

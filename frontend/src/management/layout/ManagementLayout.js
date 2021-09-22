@@ -65,19 +65,8 @@ class ManagementLayout extends React.Component {
     }
     if(this.props.token !== null){
       if (this.props.userRole !== 'admin'){
-        if (this.props.userRole === 'it'){
-          return <Redirect to="/itdashboard" />
-        }else if(this.props.userRole === 'author'){
-          return <Redirect to="/authordashboard" />
-        }else if(this.props.userRole === 'customer'){
-          return <Redirect to="/customerdashboard" />
-        }else if(this.props.userRole === 'editor'){
-          return <Redirect to="/editordashboard" />
-        }else if(this.props.userRole === 'sales_rep'){
-          return <Redirect to="/salesrepdashboard" />
-        }
-        else if(this.props.userRole === 'accountant'){
-          return <Redirect to="/accountantdashboard" />
+        if (this.props.userRole === 'bursar'){
+          return <Redirect to="/bursardashboard" />
         }
       }
     }

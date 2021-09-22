@@ -71,18 +71,7 @@ const Header = (props) => {
             </Button>
           </div>
         </div>
-        <div className="header-nav-menu d-none d-lg-block">
-          <div className="d-flex justify-content-center">
-            <Button
-              color="inherit"
-              className=" px-4 py-2 text-capitalize"
-              component={Link}
-              to='/contact-us'
-            >
-              CONTACT US
-            </Button>
-          </div>
-        </div>
+
         <div className="header-nav-actions flex-grow-0 flex-lg-grow-1">
           <span className="d-none d-lg-block">
           <Button
@@ -131,22 +120,6 @@ const Header = (props) => {
                   <MenuRoundedIcon />
                 </IconButton>
               </div>
-            </ListItem>
-            <Divider />
-
-            <Divider />
-            
-            <Divider />
-            <ListItem className="d-block py-3 px-2">
-              <Button
-                color="inherit"
-                className=" px-4 py-2 text-capitalize"
-                component={Link}
-                to='/contact-us'
-              >
-                CONTACT US
-              </Button>
-
             </ListItem>
             <Divider />
             <ListItem className="d-block py-3 px-2">

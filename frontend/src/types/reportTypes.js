@@ -1,3 +1,0 @@
-export const GET_STATS_START = 'GET_STATS_START';
-export const GET_STATS_SUCCESS = 'GET_STATS_SUCCESS';
-export const GET_STATS_FAIL = 'GET_STATS_FAIL';

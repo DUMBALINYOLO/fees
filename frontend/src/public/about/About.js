@@ -46,11 +46,11 @@ const About =(props) => {
 
         <ExpansionPanel  className='card-box-hover-rise-alt' expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
           <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-            <Typography className={classes.heading}>COMPANY NAME</Typography>
+            <Typography className={classes.heading}>PROJECT</Typography>
           </ExpansionPanelSummary>
           <ExpansionPanelDetails>
             <Typography>
-                DAWINI HIGH SCHOOL
+                SCHOOL FEES MANAGEMENT SYSTEM PROJECT
             </Typography>
           </ExpansionPanelDetails>
         </ExpansionPanel>

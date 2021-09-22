@@ -19,6 +19,4 @@ class UserViewSet(viewsets.ModelViewSet):
 	authentication_classes = (TokenAuthentication,)
 	permission_classes = [permissions.IsAuthenticated,]
 	serializer_class = UserListDetailSerializer
-	queryset = User.objects.prefetch_related(
-									'account'
-								)
+	queryset = User.objects.all()

@@ -127,4 +127,4 @@ class UserCreateSerializer(serializers.ModelSerializer):
                 			)
             return bursar
         else:
-            pass
+            print('No user type exists')

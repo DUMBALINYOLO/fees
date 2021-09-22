@@ -133,7 +133,7 @@ export default function LivePreviewExample() {
           </Grid>
           <div className="divider border-1 d-none d-md-block rounded-circle border-dark bg-dark opacity-2 mx-auto my-5 w-25" />
           <div className="text-center d-block text-black-50">
-            Copyright &copy; {new Date().getFullYear()} Flexible Measurement & Control Systems
+            Copyright &copy; {new Date().getFullYear()} Dawini High School
           </div>
         </Container>
       </div>

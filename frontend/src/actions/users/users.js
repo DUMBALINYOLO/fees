@@ -6,13 +6,15 @@ import {
   CREATE_USER_START,
   CREATE_USER_SUCCESS,
   CREATE_USER_FAIL,
-
+  GET_USERS,
+  GET_USER
 
 } from '../../types/userTypes';
 
 import {
   createuserURL,
-  activateuserURL
+  activateuserURL,
+  usersURL,
 } from '../../constants';
 
 import { returnErrors } from '../messages';
@@ -102,3 +104,33 @@ export const activateUser = (user, token) => {
         });
     };
 };
+
+export const getUsers = (token) => dispatch => {
+    let headers = axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    };
+    axios.get(usersURL, headers)
+        .then(res => {
+            dispatch({
+                type: GET_USERS,
+                payload: res.data
+            });
+        }).catch(err => console.log(err))
+}
+
+
+
+export const getUser = (id, token) => dispatch => {
+    let headers = axios.defaults.headers = {
+      "Content-Type": "application/json",
+      Authorization: `Token ${token}`
+    };
+    axios.get(`${usersURL}${id}`, headers)
+        .then(res => {
+            dispatch({
+                type: GET_USER,
+                payload: res.data
+            });
+        }).catch(err => console.log(err))
+}

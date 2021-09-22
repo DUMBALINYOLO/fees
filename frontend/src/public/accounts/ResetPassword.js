@@ -18,7 +18,6 @@ import Corporate from '../../containers/Templates/Corporate';
 import { Redirect } from "react-router-dom";
 import {authLogin, forgotPassword, resetPassword} from "../../actions/auth";
 import {activateUser} from "../../actions/users/users";
-import {addCustomer} from "../../actions/users/customers";
 import { connect } from 'react-redux';
 import GerereLogin from './Login';
 import ForgotPassword from './Forgot';
@@ -153,21 +152,7 @@ class Login extends React.Component {
                       </Grid>
 
                     </TabPanel>
-                    <TabPanel value={value} index={1}>
-                        <Grid container spacing={0} style={{paddingTop: '40px'}}>
-                          <Grid item md={4} >
-                          </Grid>
-                          <Grid item md={4} >
-                            <Register
-                                addStudent={this.props.addStudent}
-                                msg={this.props.message}
-                              />
-                          </Grid>
-                          <Grid item md={4} >
-                          </Grid>
-                        </Grid>
-
-                    </TabPanel>
+                    
 
                     <TabPanel value={value} index={2}>
 
@@ -250,7 +235,6 @@ class Login extends React.Component {
                       textColor="secondary"
                     >
                       <Tab label="LOGIN" />
-                      <Tab label="REGISTER AS A CUSTOMER" />
                       <Tab label="FORGOT PASSWORD" />
                       <Tab label="RESET PASSWORD" />
                       <Tab label="ACTIVATE ACCOUNT" />
@@ -274,21 +258,7 @@ class Login extends React.Component {
                     </Grid>
 
                   </TabPanel>
-                  <TabPanel value={value} index={1}>
-                      <Grid container spacing={0} style={{paddingTop: '40px'}}>
-                        <Grid item md={4} >
-                        </Grid>
-                        <Grid item md={4} >
-                          <Register
-                              addStudent={this.props.addStudent}
-                              msg={this.props.message}
-                            />
-                        </Grid>
-                        <Grid item md={4} >
-                        </Grid>
-                      </Grid>
 
-                  </TabPanel>
 
                   <TabPanel value={value} index={2}>
 
@@ -365,7 +335,6 @@ const mapDispatchToProps = dispatch => {
       dispatch(authLogin(email, password)),
       forgotPassword : (user) => dispatch(forgotPassword(user)),
       resetPassword: (user) => dispatch(resetPassword(user)),
-      addStudent: (user) => dispatch(addCustomer(user)),
       activateUser : (user) => dispatch(activateUser(user)),
   };
 };

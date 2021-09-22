@@ -1,4 +1,4 @@
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, viewsets, views
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from django.db.models import Q as ComplexQueryFilter
@@ -20,7 +20,7 @@ from fees.serializers import (
 						InvoiceLineListSerializer,
 					)
 from knox.auth import TokenAuthentication
-from users.models import Bursar
+from users.models import Bursar, Student
 
 
 def get_invoice(invoice_id):
@@ -37,6 +37,18 @@ def get_bursar(email):
 		return bursar
 	except:
 		return 'Bursar Does Not Exist'
+
+
+def get_student(email):
+	try:
+		student = Student.objects.get(email=email)
+		return student
+	except:
+		return 'Student Does Not Exist'
+
+
+def student_total_due(transactions):
+    return sum([transaction.total_due for transaction in transactions])
 
 
 
@@ -63,12 +75,15 @@ class InvoiceViewSet(viewsets.ModelViewSet):
 		return InvoiceCreateUpdateSerializer
 
 
-	def create(self, request, args, **kwargs):
+	def create(self, request, *args, **kwargs):
 		data = request.data.copy()
+		print(data)
 		user = request.user
 		bursar = get_bursar(user.email)
-		data['bookkeeper'] = user.bursar
+		student = get_student(data['student'])
+		data['bookkeeper'] = bursar.pk
 		data['validated_by'] = user.pk
+		data['student'] = student.pk
 		serializer = self.get_serializer(data=data)
 		serializer.is_valid(raise_exception=True)
 		self.perform_create(serializer)
@@ -93,12 +108,13 @@ class InvoiceViewSet(viewsets.ModelViewSet):
 
 
 
-	@action(detail=True, methods=['list', 'get', 'create'])
+	@action(detail=True, methods=['post', 'list', 'get', 'create'])
 	def pay(self, request, *args, **kwargs):
 		user = request.user
 		data = request.data.copy()
+		print(data)
 		bursar = get_bursar(user.email)
-		invoice=get_invoice(data['id'])
+		invoice=get_invoice(data['invoice'])
 		data['bookkeeper'] = bursar.pk
 		data['invoice'] = invoice.pk
 		serializer = PaymentCreateUpdateSerializer(data=data)
@@ -120,7 +136,7 @@ class InvoiceLineViewSet(viewsets.ModelViewSet):
 
 	def get_serializer_class(self):
 		if self.action in ['list', 'retrieve']:
-			return  InvoiceLineDetailSerializer
+			return  InvoiceLineListSerializer
 		return InvoiceLineCreateUpdateSerializer
 
 	def get_queryset(self, *args, **kwargs):
@@ -147,7 +163,7 @@ class PaymentViewSet(viewsets.ModelViewSet):
 
 	def get_serializer_class(self):
 		if self.action in ['list', 'retrieve']:
-			return  PaymentDetailSerializer
+			return  PaymentListDetailSerializer
 		return PaymentCreateUpdateSerializer
 
 	def get_queryset(self, *args, **kwargs):
@@ -165,3 +181,28 @@ class PaymentViewSet(viewsets.ModelViewSet):
 				queryset = []
 
 		return queryset
+
+
+
+
+class PaymentReport(views.APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    authentication_classes = (TokenAuthentication,)
+
+    def get(self, *args, **kwargs):
+        students = []
+
+        for student in Student.objects.all():
+
+            student_report_data = {
+                'id': student.id,
+                'name': student.first_name,
+				'surname': student.last_name,
+				'unpaid_invoices': len([invoice for invoice in student.myinvoices.all() if invoice.status =='unpaid']),
+				'partially_paid_invoices': len([invoice for invoice in student.myinvoices.all() if invoice.status =='partially']),
+				'fully_paid_invoices': len([invoice for invoice in student.myinvoices.all() if invoice.status =='fully']),
+				'total_due': student_total_due(student.myinvoices.all()),
+            }
+            students.append(student_report_data)
+
+        return Response(students, status=status.HTTP_200_OK)
