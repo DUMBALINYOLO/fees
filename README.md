@@ -26,8 +26,8 @@ a = AdminUser.objcts.create_admin(
                     middle_name ='your midlename ",
                     last_name = 'your last_name',
                     username='your username',
-                    username='your password',
-                    )
-  a.active = True
+                    password='your password',
+                )
+a.active = True
   
   then you can go on to log in

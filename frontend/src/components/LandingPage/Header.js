@@ -1,7 +1,5 @@
 import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import {
   Fab,
   Drawer,
@@ -64,41 +62,17 @@ const Header = (props) => {
               >
                 <i className="bg-white">
                   <img
-                    alt="Carolina React Admin Dashboard with Material-UI PRO"
+                    alt="DAWU"
                     src={projectLogo}
                   />
               </i>
-              <span>UBUNTU-AFRO PUBLISHERS</span>
+              <span>DAWINI HIGH SCHOOL</span>
 
             </Button>
           </div>
         </div>
         <div className="header-nav-menu d-none d-lg-block">
           <div className="d-flex justify-content-center">
-            <Button
-              color="inherit"
-              className=" px-4 py-2 text-capitalize"
-              component={Link}
-              to='/about'
-            >
-              ABOUT US
-            </Button>
-            <Button
-              color="inherit"
-              className=" px-4 py-2 text-capitalize"
-              component={Link}
-              to='/team'
-            >
-              OUR TEAM
-            </Button>
-            <Button
-              color="inherit"
-              className=" px-4 py-2 text-capitalize"
-              component={Link}
-              to='/newsletter'
-            >
-              NEWSLETTER
-            </Button>
             <Button
               color="inherit"
               className=" px-4 py-2 text-capitalize"
@@ -145,7 +119,7 @@ const Header = (props) => {
                       to='/'
 
                     >
-                    <span>UBUNTU-AFRO</span>
+                    <span>DAWINI HIGH SCHOOL</span>
 
                   </Button>
 
@@ -159,41 +133,9 @@ const Header = (props) => {
               </div>
             </ListItem>
             <Divider />
-            <ListItem className="d-block py-3 px-2">
-              <Button
-                color="inherit"
-                className=" px-4 py-2 text-capitalize"
-                component={Link}
-                to='/about'
-              >
-                ABOUT US
-              </Button>
 
-            </ListItem>
             <Divider />
-            <ListItem className="d-block py-3 px-2">
-              <Button
-                color="inherit"
-                className=" px-4 py-2 text-capitalize"
-                component={Link}
-                to='/team'
-              >
-                OUR TEAM
-              </Button>
-
-            </ListItem>
-            <Divider />
-            <ListItem className="d-block py-3 px-2">
-              <Button
-                color="inherit"
-                className=" px-4 py-2 text-capitalize"
-                component={Link}
-                to='/newsletter'
-              >
-                NEWSLETTER
-              </Button>
-
-            </ListItem>
+            
             <Divider />
             <ListItem className="d-block py-3 px-2">
               <Button

@@ -113,7 +113,6 @@ class User(AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(max_length =32, blank=True, null=True,)
     phone_number = models.CharField(max_length =32, blank=True, null=True,)
     whatsapp_number = models.CharField(max_length =32, blank=True, null=True,)
-    image = models.ImageField(upload_to='profiles/%Y/%m/%d/', null=True, blank=True)
     start_date = models.DateTimeField(auto_now_add=True, blank=True, null=True)
 
 

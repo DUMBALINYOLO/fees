@@ -130,4 +130,38 @@ class InvoiceLineViewSet(viewsets.ModelViewSet):
 		invoice_id = self.request.query_params.get('id', None)
 		if invoice_id is not None:
 			invoice = get_invoice(invoice_id)
-			if 
+			if invoice != 'Invoice Does Not Exist':
+				queryset = queryset.filter(
+					invoice=invoice
+				)
+			else:
+				queryset = []
+
+		return queryset
+
+
+class PaymentViewSet(viewsets.ModelViewSet):
+	authentication_classes = [TokenAuthentication, ]
+	permission_classes = [permissions.IsAuthenticated,]
+	lookup_field = 'id'
+
+	def get_serializer_class(self):
+		if self.action in ['list', 'retrieve']:
+			return  PaymentDetailSerializer
+		return PaymentCreateUpdateSerializer
+
+	def get_queryset(self, *args, **kwargs):
+		queryset = Payment.objects.select_related(
+											'invoice'
+										)
+		invoice_id = self.request.query_params.get('id', None)
+		if invoice_id is not None:
+			invoice = get_invoice(invoice_id)
+			if invoice != 'Invoice Does Not Exist':
+				queryset = queryset.filter(
+					invoice=invoice
+				)
+			else:
+				queryset = []
+
+		return queryset
